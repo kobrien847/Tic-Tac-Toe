@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+
+  <title>Frontend Mentor | Tic Tac Toe</title>
+</head>
+
+<body>
+  <main>
+    <!-- New game menu start -->
+    <div id="start-menu">
+      <div class="logo-wrapper center">
+        <img src="./assets/logo.svg" alt="logo" class="logo">
+      </div>
+      <div class="pick-player-container center">
+        <div class="center t_medium">
+          Pick player 1's mark
+        </div>
+        <div class="pick-player">
+          <button id="pick-x" alt="pick x" class="player-button center" onclick="pickPlayer(this.id)">
+            <svg viewbox="0 0 66 66" width="32" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M51.12 1.269c.511 0 1.023.195 1.414.586l9.611 9.611c.391.391.586.903.586 1.415s-.195 1.023-.586 1.414L44.441 32l17.704 17.705c.391.39.586.902.586 1.414 0 .512-.195 1.024-.586 1.415l-9.611 9.611c-.391.391-.903.586-1.415.586a1.994 1.994 0 0 1-1.414-.586L32 44.441 14.295 62.145c-.39.391-.902.586-1.414.586a1.994 1.994 0 0 1-1.415-.586l-9.611-9.611a1.994 1.994 0 0 1-.586-1.415c0-.512.195-1.023.586-1.414L19.559 32 1.855 14.295a1.994 1.994 0 0 1-.586-1.414c0-.512.195-1.024.586-1.415l9.611-9.611c.391-.391.903-.586 1.415-.586s1.023.195 1.414.586L32 19.559 49.705 1.855c.39-.391.902-.586 1.414-.586Z" />
+            </svg>
+          </button>
+          <button id="pick-o" alt="pick o" class="player-button center" onclick="pickPlayer(this.id)">
+            <svg viewbox="0 0 66 66" width="32" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M33 1c17.673 0 32 14.327 32 32 0 17.673-14.327 32-32 32C15.327 65 1 50.673 1 33 1 15.327 15.327 1 33 1Zm0 18.963c-7.2 0-13.037 5.837-13.037 13.037 0 7.2 5.837 13.037 13.037 13.037 7.2 0 13.037-5.837 13.037-13.037 0-7.2-5.837-13.037-13.037-13.037Z" />
+            </svg>
+          </button>
+        </div>
+        <div class="t_small opacity-50 center">Remember: X goes first</div>
+      </div>
+
+      <button id="new-game-cpu" class="primary-button button-primary-o" onclick="pickGame(this.id)">
+        New Game (vs CPU)</button>
+      <button id="new-game-2p" class="primary-button button-primary-x" onclick="pickGame(this.id)">
+        New Game (vs player)</button>
+    </div>
+    <!-- New game menu end -->
+
+    <!-- Game board start -->
+    <div id="game-board-container">
+      <div class="top-row">
+        <div class="logo-board">
+          <img src="./assets/logo.svg" alt="logo" class="logo">
+        </div>
+        <div class="turn-wrapper">
+          <div id="turn-icon-wrapper" class="center">
+            <svg viewbox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+              <path id="turn-indicator"
+                d="M33 1c17.673 0 32 14.327 32 32 0 17.673-14.327 32-32 32C15.327 65 1 50.673 1 33 1 15.327 15.327 1 33 1Zm0 18.963c-7.2 0-13.037 5.837-13.037 13.037 0 7.2 5.837 13.037 13.037 13.037 7.2 0 13.037-5.837 13.037-13.037 0-7.2-5.837-13.037-13.037-13.037Z" />
+            </svg>
+          </div>
+          <div class="t_turn">
+            turn
+          </div>
+        </div>
+
+        <div class="restart-button" onClick="resetButton()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <g filter="url(#filter0_i_0_729)">
+              <rect width="40" height="40" rx="5" fill="#A8BFC9" />
+            </g>
+            <path
+              d="M27.3262 12.3076H25.8799C25.6778 12.3074 25.5137 12.4712 25.5135 12.6735C25.5135 12.6794 25.5136 12.6854 25.5139 12.6913L25.6359 15.2176C24.2 13.5244 22.0921 12.5494 19.8729 12.5518C15.704 12.5518 12.3046 15.9563 12.3076 20.1278C12.3107 24.3061 15.6967 27.6922 19.8729 27.6922C21.7462 27.6949 23.5534 26.9994 24.9422 25.7414C25.0928 25.6064 25.1057 25.3749 24.9708 25.2241C24.9663 25.2191 24.9616 25.2141 24.9568 25.2093L23.9197 24.1715C23.7835 24.0352 23.565 24.0279 23.42 24.1547C21.1938 26.1146 17.8014 25.8975 15.8427 23.6699C13.8841 21.4422 14.101 18.0475 16.3272 16.0876C18.5534 14.1277 21.9458 14.3448 23.9045 16.5724C24.058 16.747 24.2 16.9314 24.3297 17.1244L21.2325 16.9758C21.0306 16.9662 20.8591 17.1222 20.8495 17.3243C20.8492 17.3302 20.849 17.3362 20.8491 17.3421V18.7893C20.8491 18.9916 21.0129 19.1556 21.2151 19.1556H27.3262C27.5284 19.1556 27.6923 18.9916 27.6923 18.7893V12.6739C27.6922 12.4716 27.5283 12.3076 27.3262 12.3076Z"
+              fill="#1F3641" />
+            <defs>
+              <filter id="filter0_i_0_729" x="0" y="0" width="40" height="40" filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                  result="hardAlpha" />
+                <feOffset dy="-4" />
+                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0.418727 0 0 0 0 0.538482 0 0 0 0 0.590549 0 0 0 1 0" />
+                <feBlend mode="normal" in2="shape" result="effect1_innerShadow_0_729" />
+              </filter>
+            </defs>
+          </svg>
+        </div>
+      </div>
+
+      <div id="game-board">
+        <div id="r1c1" onclick="pickTile(this.id)" onmouseenter="hoverTile(this.id)"
+          onmouseleave="hoverExitTile(this.id)">
+          <svg viewbox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <path class="tile-path" d="" />
+          </svg>
+        </div>
+        <div id="r1c2" onclick="pickTile(this.id)" onmouseenter="hoverTile(this.id)"
+          onmouseleave="hoverExitTile(this.id)">
+          <svg viewbox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <path class="tile-path" d="" />
+          </svg>
+        </div>
+        <div id="r1c3" onclick="pickTile(this.id)" onmouseenter="hoverTile(this.id)"
+          onmouseleave="hoverExitTile(this.id)">
+          <svg viewbox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <path class="tile-path" d="" />
+          </svg>
+        </div>
+        <div id="r2c1" onclick="pickTile(this.id)" onmouseenter="hoverTile(this.id)"
+          onmouseleave="hoverExitTile(this.id)">
+          <svg viewbox="0 0 66 66" width="48" xmlns="http://www.w3.org/2000/svg">
+            <path class="tile-path" d="" />
+          </svg>
+        </div>
+        <div id="r2c2" onclick="pickTile(this.id)" onmouseenter="hoverTile(this.id)"
+          onmouseleave="hoverExitTile(this.id)">
+          <svg viewbox="0 0 66 66" width="48" xmlns="http://www.w3.org/2000/svg">
+            <path class="tile-path" d="" />
+          </svg>
+        </div>
+        <div id="r2c3" onclick="pickTile(this.id)" onmouseenter="hoverTile(this.id)"
+          onmouseleave="hoverExitTile(this.id)">
+          <svg viewbox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <path class="tile-path" d="" />
+          </svg>
+        </div>
+        <div id="r3c1" onclick="pickTile(this.id)" onmouseenter="hoverTile(this.id)"
+          onmouseleave="hoverExitTile(this.id)">
+          <svg viewbox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <path class="tile-path" d="" />
+          </svg>
+        </div>
+        <div id="r3c2" onclick="pickTile(this.id)" onmouseenter="hoverTile(this.id)"
+          onmouseleave="hoverExitTile(this.id)">
+          <svg viewbox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <path class="tile-path" d="" />
+          </svg>
+        </div>
+        <div id="r3c3" onclick="pickTile(this.id)" onmouseenter="hoverTile(this.id)"
+          onmouseleave="hoverExitTile(this.id)">
+          <svg viewbox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <path class="tile-path" d="" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="bottom-row">
+        <div class="score-tile bg-x">
+          <div class="score t_x-small">X (<span id="player-x-name"></span>)</div>
+          <div class="score t_score_value"><span id="player-x-score">88</span></div>
+        </div>
+        <div class="score-tile bg-secondary">
+          <div class="score t_x-small">Ties</div>
+          <div class="score t_score_value"><span id="ties-score">88</span></div>
+        </div>
+        <div class="score-tile bg-o">
+          <div class="score t_x-small">O (<span id="player-o-name">CPU</span>)</div>
+          <div class="score t_score_value"><span id="player-o-score">88</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Game board end -->
+  </main>
+  <dialog id="dialog-box">
+    <div class="dialog-wrapper">
+      <div class="dialog-border"></div>
+      <div class="dialog-banner">
+        <div id="game-over">
+          <div class="dialog-content-wrapper">
+            <div id="dialog-content-header" class="t_dialog_content-header">
+              <span id="you-lost">Oh no, you lost</span>
+              <span id="you-won">You won!</span>
+              <span id="player1-wins">Player 1 wins!</span>
+              <span id="player2-wins">Player 2 wins!</span>
+            </div>
+            <div class="dialog-content-primary t_dialog_content-primary">
+              <div id="winner">
+                <svg viewbox="0 0 66 66" width="32" xmlns="http://www.w3.org/2000/svg">
+                  <path id="game-over-path" d="" />
+                </svg>
+                <span id="player-won">takes the round</span>
+                <span id="tied">round tied</span>
+              </div>
+            </div>
+            <div class="dialog-button-group">
+              <button id="quit" onclick="endGameDialogClick(this.id)" class="dialog-button button-secondary">
+                Quit
+              </button>
+              <button id="next-round" onclick="endGameDialogClick(this.id)" class="dialog-button button-primary-o">
+                Next round
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="restart" class="dialog-content">
+          <div class="dialog-content-wrapper">
+            <div class="dialog-content-primary t_dialog_content-primary tcolor-secondary">
+              restart game?
+            </div>
+            <div class="dialog-button-group">
+              <button id="reset-no" onclick="resetDialogClick(this.id)" class="dialog-button button-secondary">
+                No, cancel</button>
+              <button id="reset-yes" onclick="resetDialogClick(this.id)" class="dialog-button button-primary-o">
+                Yes, restart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dialog-border"></div>
+
+    </div>
+
+  </dialog>
+</body>
+
+</html>
